@@ -7,5 +7,6 @@ bug.md
 /src/provider/TronLinkProvider
 !package.json
 /example/my-react-app_dev/*
+/example/my-app-nextjs/*
 /example/ton.html
 /example/tonconnect.html

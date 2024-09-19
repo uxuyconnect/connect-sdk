@@ -3,6 +3,7 @@
  - [tg-dapp-demo](https://github.com/uxuycom/test-tg-dapp)
  - [quickstart](https://docs.uxuy.com/uxuy-connect/quickstart/)
  - [API guide](https://docs.uxuy.com/uxuy-connect/guide/)
+ - [@rainbow-me/rainbowkit and wagmi](https://github.com/uxuySafe/examples)
 
 
 
