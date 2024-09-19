@@ -1,0 +1,28 @@
+{
+
+  "compileOnSave":true,
+  "compilerOptions": {
+    "allowJs": true,
+    "noImplicitAny": false,
+    "module": "ES6",
+    "moduleResolution": "Node",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017",
+    "lib": ["DOM", "ES2018"],
+    "checkJs": true,
+    "rootDirs": ["node_modules/@type", "src/global.d.ts"],
+    "types": ["node"],
+
+    "composite": false, 
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "esModuleInterop": true,
+    "emitDeclarationOnly": true,
+    "diagnostics": true,  
+    "resolveJsonModule": true
+
+  },
+  "include": ["./**/*.ts",  "./**/**/**.ts", "package.json", ],
+  "exclude": ["node_modules", "./dist", "src/utils/telegram-web-app.js"]
+}

@@ -1,0 +1,30 @@
+{
+    "extends": "../../tsconfig.json",
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "compileOnSave":true,
+    "compilerOptions": {
+    
+      "declaration": true,
+      "module": "ESNEXT",
+      "moduleResolution": "Node",
+      "sourceMap": true,
+      "strict": true,
+      "lib": ["NODE"],
+      "checkJs": true,
+      "types": ["node"],
+      "declarationDir": "dist/types",
+      "esModuleInterop": true,
+      "emitDeclarationOnly": true,
+      "diagnostics": true,
+    
+      "resolveJsonModule": true
+  
+    },
+    "include": ["./**/*.ts"],
+    "exclude": ["node_modules"],
+    "ts-node": {
+      // Tell ts-node CLI to install the --loader automatically, explained below
+      "esm": true
+    }
+  }
+  

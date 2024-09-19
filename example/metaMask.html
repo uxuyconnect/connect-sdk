@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+ 
+  </head>
+
+  <body>
+    <button id="connected">tgConnected</button>
+    <button id="metaMaskConnected">metaMaskConnected</button>
+    <button id="switchNetwork">switchNetwork</button>
+
+    <button id="sendEther">sendEther</button>
+    <button id="sendToken">sendToken</button>
+
+    
+    <script type="module">
+    import { WalletTgSdk } from 'https://cdn.jsdelivr.net/npm/@uxuycom/web3-tg-sdk';
+    import * as ethers from 'https://cdn.bootcdn.net/ajax/libs/ethers/5.7.2/ethers.esm.js'
+
+    const walletTgSdk =  new WalletTgSdk({ injected: true })
+
+    // console.log(tgWeb3Sdk)
+      const Erc20API = [
+        {
+          constant: true,
+          inputs: [],
+          name: 'name',
+          outputs: [
+            {
+              name: '',
+              type: 'string',
+            },
+          ],
+          payable: false,
+          type: 'function',
+        },
+        {
+          constant: false,
+          inputs: [
+            {
+              name: '_spender',
+              type: 'address',
+            },
+            {
+              name: '_value',
+              type: 'uint256',
+            },
+          ],
+          name: 'approve',
+          outputs: [
+            {
+              name: 'success',
+              type: 'bool',
+            },
+          ],
+          payable: false,
+          type: 'function',
+        },
+        {
+          constant: true,
+          inputs: [],
+          name: 'totalSupply',
+          outputs: [
+            {
+              name: '',
+              type: 'uint256',
+            },
+          ],
+          payable: false,
+          type: 'function',
+        },
+        {
+          constant: false,
+          inputs: [
+            {
+              name: '_from',
+              type: 'address',
+            },
+            {
+              name: '_to',
+              type: 'address',
+            },
+            {
+              name: '_value',
+              type: 'uint256',
+            },
+          ],
+          name: 'transferFrom',
+          outputs: [
+            {
+              name: 'success',
+              type: 'bool',
+            },
+          ],
+          payable: false,
+          type: 'function',
+        },
+        {
+          constant: true,
+          inputs: [],
+          name: 'decimals',
+          outputs: [
+            {
+              name: '',
+              type: 'uint256',
+            },
+          ],
+          payable: false,
+          type: 'function',
+        },
+        {
+          constant: true,
+          inputs: [],
+          name: 'version',
+          outputs: [
+            {
+              name: '',
+              type: 'string',
+            },
+          ],
+          payable: false,
+          type: 'function',
+        },
+        {
+          constant: true,
+          inputs: [
+            {
+              name: '_owner',
+              type: 'address',
+            },
+          ],
+          name: 'balanceOf',
+          outputs: [
+            {
+              name: 'balance',
+              type: 'uint256',
+            },
+          ],
+          payable: false,
+          type: 'function',
+        },
+        {
+          constant: true,
+          inputs: [],
+          name: 'symbol',
+          outputs: [
+            {
+              name: '',
+              type: 'string',
+            },
+          ],
+          payable: false,
+          type: 'function',
+        },
+        {
+          constant: false,
+          inputs: [
+            {
+              name: '_to',
+              type: 'address',
+            },
+            {
+              name: '_value',
+              type: 'uint256',
+            },
+          ],
+          name: 'transfer',
+          outputs: [
+            {
+              name: 'success',
+              type: 'bool',
+            },
+          ],
+          payable: false,
+          type: 'function',
+        },
+        {
+          constant: false,
+          inputs: [
+            {
+              name: '_spender',
+              type: 'address',
+            },
+            {
+              name: '_value',
+              type: 'uint256',
+            },
+            {
+              name: '_extraData',
+              type: 'bytes',
+            },
+          ],
+          name: 'approveAndCall',
+          outputs: [
+            {
+              name: 'success',
+              type: 'bool',
+            },
+          ],
+          payable: false,
+          type: 'function',
+        },
+        {
+          constant: true,
+          inputs: [
+            {
+              name: '_owner',
+              type: 'address',
+            },
+            {
+              name: '_spender',
+              type: 'address',
+            },
+          ],
+          name: 'allowance',
+          outputs: [
+            {
+              name: 'remaining',
+              type: 'uint256',
+            },
+          ],
+          payable: false,
+          type: 'function',
+        },
+        {
+          inputs: [
+            {
+              name: '_initialAmount',
+              type: 'uint256',
+            },
+            {
+              name: '_tokenName',
+              type: 'string',
+            },
+            {
+              name: '_decimalUnits',
+              type: 'uint8',
+            },
+            {
+              name: '_tokenSymbol',
+              type: 'string',
+            },
+          ],
+          type: 'constructor',
+        },
+        {
+          payable: false,
+          type: 'fallback',
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              name: '_from',
+              type: 'address',
+            },
+            {
+              indexed: true,
+              name: '_to',
+              type: 'address',
+            },
+            {
+              indexed: false,
+              name: '_value',
+              type: 'uint256',
+            },
+          ],
+          name: 'Transfer',
+          type: 'event',
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              name: '_owner',
+              type: 'address',
+            },
+            {
+              indexed: true,
+              name: '_spender',
+              type: 'address',
+            },
+            {
+              indexed: false,
+              name: '_value',
+              type: 'uint256',
+            },
+          ],
+          name: 'Approval',
+          type: 'event',
+        },
+      ]
+
+
+      // Multiple wallets can be modified here
+      function getProvider(type = 'injected') {
+
+        if(type != "injected"){
+            return walletTgSdk.ethereum
+        }
+
+        //MetaMask injected
+        return window.ethereum
+      }
+
+      let address = '',
+        balance = '',
+        chainId = 1,
+        Wallet = null,
+        provider = null
+
+      //get data
+      const getAddress = async () => {
+        const accounts = await Wallet.listAccounts()
+        return accounts[0]
+      }
+
+      const getBalance = async () => {
+        const address = await getAddress()
+        const balance = await Wallet.getBalance(address)
+        return ethers.utils.formatEther(balance)
+      }
+
+      const getChainId = async () => {
+        debugger
+        const { chainId } = Wallet.getNetwork()
+        debugger
+        return parseInt(chainId)
+      }
+
+      const getAccountData = async () => {
+        address = await getAddress()
+        chainId = await getChainId()
+        balance = await getBalance()
+      }
+
+      //listener event
+      const listenser = async () => {
+        // provider.removeAllListeners()
+        provider.removeListener('chainChanged', ChainChangedHandler)
+        provider.removeListener('accountsChanged', AccountsChangedHandler)
+
+        function ChainChangedHandler(chainId) {
+          // chainId = parseInt(chainId, 16)
+          getAccountData()
+        }
+        function AccountsChangedHandler(accounts) {
+          //  address = accounts[0]
+          getAccountData()
+        }
+        provider.on('chainChanged', ChainChangedHandler)
+        provider.on('accountsChanged', AccountsChangedHandler)
+      }
+
+      // switchNetwork
+      const switchNetwork = async (network) => {
+        try {
+          await provider.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: network.chainId }],
+          })
+        } catch (error) {
+          // if (switchError.code === 4902) {
+          //   await ethereum.request({
+          //     method: 'wallet_addEthereumChain',
+          //     params: [
+          //       {
+          //         chainId: '0xf00',
+          //         chainName: '...',
+          //         rpcUrls: ['https://...'] /* ... */,
+          //       },
+          //     ],
+          //   })
+          // }
+        }
+      }
+
+      // send eth
+      const sendEther = async (toAddress, amount) => {
+        const signer = Wallet.getSigner()
+        const transaction = {
+          to: toAddress,
+          value: ethers.utils.parseEther(amount),
+        }
+        const txResponse = await signer.sendTransaction(transaction)
+        return txResponse.hash
+      }
+
+      // send token
+      const sendToken = async (
+        toAddress,
+        amount,
+        contractAddress,
+        decimals,
+        gasPrice,
+      ) => {
+        try {
+          const signer = Wallet.getSigner()
+          const contract = new ethers.Contract(
+            contractAddress,
+            Erc20API,
+            signer,
+          )
+          const tokenAmount = ethers.utils.parseUnits(amount, decimals)
+          const gasLimit = await contract.estimateGas.transfer(
+            toAddress,
+            tokenAmount,
+          )
+          const transaction = {
+            to: contractAddress,
+            gasPrice: ethers.utils.parseUnits(gasPrice, 'gwei'),
+            gasLimit: gasLimit,
+            value: 0,
+            data: contract.interface.encodeFunctionData('transfer', [
+              toAddress,
+              tokenAmount,
+            ]),
+          }
+          const txResponse = await signer.sendTransaction(transaction)
+          return txResponse.hash
+        } catch (error) {
+          console.error(error)
+          return null
+        }
+      }
+
+      document.querySelector('#connected').onclick = async function () {
+        provider = getProvider('tgWallet')
+        await provider.request({ method: 'eth_requestAccounts' })
+        Wallet = new ethers.providers.Web3Provider(provider)
+        await getAccountData()
+        await  switchNetwork({ chainId: '0x38' })
+        listenser()
+      }
+      document.querySelector('#metaMaskConnected').onclick = async function () {
+        provider = getProvider('injected')
+        await provider.request({ method: 'eth_requestAccounts' })
+        Wallet = new ethers.providers.Web3Provider(provider)
+        await getAccountData()
+        await  switchNetwork({ chainId: '0x38' })
+        listenser()
+      }
+
+      document.querySelector('#switchNetwork').onclick = async function () {
+        await switchNetwork({ chainId: '0x38' })
+      }
+
+      document.querySelector('#sendEther').onclick = async function () {
+        await sendEther('0x8b13d2f6707586c298339ADDf90CEd908993F47d', '0.1')
+      }
+
+      document.querySelector('#sendToken').onclick = async function () {
+        await sendToken(
+          '0x8b13d2f6707586c298339ADDf90CEd908993F47d',
+          '10',
+          '0x55d398326f99059ff775485246999027b3197955',
+          18,
+          '0.000063',
+        )
+      }
+    </script>
+  </body>
+</html>

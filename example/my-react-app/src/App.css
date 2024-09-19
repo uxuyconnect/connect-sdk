@@ -1,0 +1,14 @@
+* {
+    box-sizing: border-box;
+    /* padding: 0;
+    margin: 0; */
+}
+body {
+    max-width: 100vw;
+    word-break: break-all;
+}
+
+input {
+    font-size: 16px;
+    line-height: 1.6;
+}

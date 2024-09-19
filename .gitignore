@@ -1,0 +1,11 @@
+node_modules
+.DS_Store
+.vscode
+dist
+bug.md
+/src/provider/TonProvider
+/src/provider/TronLinkProvider
+!package.json
+/example/my-react-app_dev/*
+/example/ton.html
+/example/tonconnect.html
