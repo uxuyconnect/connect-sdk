@@ -33,7 +33,6 @@ const { ethereum } = new WalletTgSdk({
 ```
 
 ### MetaMask Standard Wallet Integration (Beta)
-Based on your request, I'll rephrase the content in the image using more professional open-source project terminology:
 
 MetaMask Standard Wallet Integration (Beta)
 
