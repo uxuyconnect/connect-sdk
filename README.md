@@ -1,3 +1,5 @@
+# UXUY-Connect
+Welcome to the documents for UXUY Connect SDK. The SDK provides the APIs for developers to build applications with UXUY Wallet on Telegram. By using the SDK, developers can create the wallet like Dapp and perform actions to interact with the Wallet.
 
 ### resource
  - [tg-dapp-demo](https://github.com/uxuycom/test-tg-dapp)
