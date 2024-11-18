@@ -1,19 +1,17 @@
 # UXUY-Connect
 Welcome to the documents for UXUY Connect SDK. The SDK provides the APIs for developers to build applications with UXUY Wallet on Telegram. By using the SDK, developers can create the wallet like Dapp and perform actions to interact with the Wallet.
 
-### resource
- - [tg-dapp-demo](https://github.com/uxuycom/test-tg-dapp)
- - [quickstart](https://docs.uxuy.com/uxuy-connect/quickstart/)
- - [API guide](https://docs.uxuy.com/uxuy-connect/guide/)
+## How to use UXUY Connect SDK in Your Project
+### Install Story Protocol core SDK
 
-
-
-### Install
+Use `SDK`:
 
 ```
 npm install @uxuycom/web3-tg-sdk
-
 ```
+# Initiate SDK Client
+
+Next we can initiate the SDK Client by first setting up our wallet and then the client itself.
 
 
 ### Usage
@@ -323,6 +321,10 @@ ethereum.on('accountsChanged', handleAccountsChanged);
 
 ```
 
+### resource
+ - [tg-dapp-demo](https://github.com/uxuycom/test-tg-dapp)
+ - [quickstart](https://docs.uxuy.com/uxuy-connect/quickstart/)
+ - [API guide](https://docs.uxuy.com/uxuy-connect/guide/)
 
 
 
