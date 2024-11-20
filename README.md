@@ -230,7 +230,7 @@ const transactionParameters = {
 
 
 
-### signData Api
+### SignData Api
 
 - personal_sign
 - eth_signTypedData
@@ -241,7 +241,7 @@ You can refer to docs
 [signing-data-with-metamask](https://docs.metamask.io/wallet/how-to/sign-data/#signing-data-with-metamask)
 [eth-sig-util](https://github.com/MetaMask/eth-sig-util)
 
-#### personal_sign
+#### Personal_sign
 
 sign a message with the connected wallet.
 
@@ -276,7 +276,7 @@ sign a message with the connected wallet.
 
 
 
-### Event listeners
+### Event Listeners
 Notify when address and network change. Uses [eventemitter3](https://www.npmjs.com/package/eventemitter3).
 
 
@@ -330,7 +330,7 @@ ethereum.on('accountsChanged', handleAccountsChanged);
 
 ```
 
-### resource
+### Resource
  - [tg-dapp-demo](https://github.com/uxuycom/test-tg-dapp)
  - [quickstart](https://docs.uxuy.com/uxuy-connect/quickstart/)
  - [API guide](https://docs.uxuy.com/uxuy-connect/guide/)
