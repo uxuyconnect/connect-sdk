@@ -132,8 +132,7 @@ ethereum.request = (args: RequestArguments): Promise<any>
 connect to the wallet and return the address of the connected wallet.
 
 - method: eth_requestAccounts
-- params: [] |
-- returns: Promise<string[address]>
+- - returns: Promise<string[address]>
   
 ``` ts
 
