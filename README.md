@@ -11,10 +11,6 @@ npm install @uxuycom/web3-tg-sdk
 ```
 [npm source](https://www.npmjs.com/package/@uxuycom/web3-tg-sdk)
 
-# Initiate npm Client
-
-Next we can initiate the SDK Client by first setting up our wallet and then the client itself.
-
 
 ### Usage
 
