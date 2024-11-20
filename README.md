@@ -126,7 +126,6 @@ ethereum.request = (args: RequestArguments): Promise<any>
 ``` 
 
 
-### from UXuy Wallet rpc api
 
 #### eth_requestAccounts
 
