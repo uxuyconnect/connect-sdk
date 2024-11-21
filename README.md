@@ -9,7 +9,7 @@ Use `npm`:
 ```
 npm install @uxuycom/web3-tg-sdk
 ```
-[npm source](https://www.npmjs.com/package/@uxuycom/web3-tg-sdk)
+[npm package source](https://www.npmjs.com/package/@uxuycom/web3-tg-sdk)
 
 
 ### Usage
