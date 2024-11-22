@@ -34,6 +34,23 @@ This section provides the instructions on how to build UXUY SDK from source code
 #### Prerequisite
 Install PNPM: `Execute npm install -g pnpm`   
 Install TypeScript: `Run pnpm add typescript -D`
+- Install Yalc: Use `npm install -g yalc`
+
+### Steps for Using Yalc for Local Testing of Core-SDK
+
+For manual testing of the core-sdk, set up a separate web project. The guide below uses `yalc` to link the `core-sdk` locally, enabling its installation and import for testing.
+
+Under the `typescript-sdk/packages/web3-tg-sdk` directory:
+
+- Navigate to the `core-sdk` directory.
+- Execute `npm run build` to build your latest code.
+- Run `yalc publish`. You should see a message like `@uxuycom/web3-tg-sdk@<version> published in store.` (Note: The version number may vary).
+
+To set up your testing environment (e.g., a new Next.js project), use `yalc add @uxuycom/web3-tg-sdk@<version>` (ensure the version number is updated accordingly).
+
+- Run `pnpm install`. This installs `@uxuycom/web3-tg-sdk@<version>` with your local changes.
+
+
 
 ### MetaMask Standard Wallet Integration (Beta)
 
