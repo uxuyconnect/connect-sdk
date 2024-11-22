@@ -327,10 +327,14 @@ ethereum.on('accountsChanged', handleAccountsChanged);
 
 ```
 
+### More Tutorial
+[❓How to add custom chains to the code. #11](https://github.com/orgs/uxuyconnect/discussions/11)
+
 ### Resource
  - [tg-dapp-demo](https://github.com/uxuycom/test-tg-dapp)
  - [quickstart](https://docs.uxuy.com/uxuy-connect/quickstart/)
  - [API guide](https://docs.uxuy.com/uxuy-connect/guide/)
+
 
 
 
