@@ -12,21 +12,6 @@ npm install @uxuycom/web3-tg-sdk
 [npm package source](https://www.npmjs.com/package/@uxuycom/web3-tg-sdk)
 
 
-### Usage
-
-```
-import { WalletTgSdk } from 'https://cdn.jsdelivr.net/npm/@uxuycom/web3-tg-sdk';
-
-import { WalletTgSdk } from '@uxuycom/web3-tg-sdk'
-
-const { ethereum } = new WalletTgSdk({
-    metaData: {
-        name: 'your name',
-        icon:"https://example.com/icon.png"
-       
-    }
-})
-```
 
 ### How To Build and Test UXUY SDK for local testing
 This section provides the instructions on how to build UXUY SDK from source code.
