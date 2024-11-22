@@ -28,6 +28,13 @@ const { ethereum } = new WalletTgSdk({
 })
 ```
 
+### How To Build and Test UXUY SDK for local testing
+This section provides the instructions on how to build UXUY SDK from source code.
+
+#### Prerequisite
+Install PNPM: `Execute npm install -g pnpm`   
+Install TypeScript: `Run pnpm add typescript -D`
+
 ### MetaMask Standard Wallet Integration (Beta)
 
 We are pleased to announce the integration of MetaMask's standard wallet. Connection can now be established with a single line of code.
