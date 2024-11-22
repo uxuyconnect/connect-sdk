@@ -6,7 +6,7 @@ Welcome to the documents for UXUY Connect SDK. The SDK provides the APIs for dev
 
 Use `npm`:
 
-```
+```javascript index.ts
 npm install @uxuycom/web3-tg-sdk
 ```
 
@@ -15,13 +15,168 @@ npm install @uxuycom/web3-tg-sdk
 ### Import and Initialize the SDK
 In your JavaScript file, import and initialize the UXUY-Connect SDK:
 
-import { WalletTgSdk } from `@uxuycom/web3-tg-sdk`;
+ ```javascript index.ts
+ import { WalletTgSdk } from `@uxuycom/web3-tg-sdk`;
+    
+ const { ethereum } = new WalletTgSdk();
+ ```
 
+### Connect to Wallet
+Implement a function to connect to the UXUY Wallet:
+
+```javascript index.ts
+async function connectWallet() {
+    try {
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        console.log('Connected account:', accounts[0]);
+        return accounts[0];
+    } catch (error) {
+        console.error('Failed to connect wallet:', error);
+    }
+}
+```
+
+### Get Chain ID and Get Account
+Retrieve the current chain ID:
+
+```javascript index.ts
+// Get the current chain ID
+async function getChainId() {
+    try {
+        const chainId = await ethereum.request({ method: 'eth_chainId' });
+        console.log('Current chain ID:', chainId);
+        return chainId;
+    } catch (error) {
+        console.error('Failed to get chain ID:', error);
+    }
+}
+
+// Get the current address
+async function getAccounts() {
+    try {
+        const accounts = await ethereum.request({ method: 'eth_accounts' });
+        console.log('Current address:', accounts[0]);
+        return accounts[0];
+    } catch (error) {
+        console.error('Failed to get address:', error);
+    }
+}
+```
+
+### Send a Transaction
+Implement a function to send a transaction:
+
+```javascript index.ts
+
+async function sendTransaction(to, value) {
+    try {
+        const accounts = await ethereum.request({ method: 'eth_accounts' });
+        const transactionParameters = {
+            to: to,
+            from: accounts[0],
+            value: value, // Value in wei
+            // gasPrice: '0x09184e72a000', // Customize as needed
+            // gas: '0x5208', // 21000 gas limit
+        };
+
+        const txHash = await ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [transactionParameters],
+        });
+        console.log('Transaction sent:', txHash);
+        return txHash;
+    } catch (error) {
+        console.error('Failed to send transaction:', error);
+    }
+}
+```
+
+### Listen for Events
+Set up event listeners for account and chain changes:
+
+```javascript index.ts
+ethereum.on('accountsChanged', (accounts) => {
+    console.log('Active account changed:', accounts[0]);
+});
+
+ethereum.on('chainChanged', (chainId) => {
+    console.log('Network changed to:', chainId);
+});
+```
+
+## Example usage
+Here's a simple example of how to use these functions:
+
+```javascript index.ts
+
+import { WalletTgSdk } from '@uxuycom/web3-tg-sdk';
 const { ethereum } = new WalletTgSdk();
+let address = null;
+let chainId = null;
+
+// Call this function when your DApp initializes
+async function initializeWallet() {
+    // Check if the wallet is already connected
+    let accounts = await ethereum.request({ method: 'eth_accounts' });
+    if (!accounts[0]) {
+        await ethereum.request({ method: 'eth_requestAccounts' });
+    }
+
+    // Get the current account and chain ID
+    chainId = await ethereum.request({ method: 'eth_chainId' });
+    accounts = await ethereum.request({ method: 'eth_accounts' });
+    address = accounts[0];
+  
+
+    // Set up event listeners for account and chain changes
+    ethereum.removeAllListeners();
+    ethereum.on('accountsChanged', (accounts) => {
+        address = accounts[0];
+        console.log('Active account changed:', accounts[0]);
+    });
+    ethereum.on('chainChanged', (changedChainId) => {
+        chainId = changedChainId
+        console.log('Network changed to:', changedChainId);
+    });
+
+}
+
+
+async function sendTransaction(to, value) {
+
+    const transactionParameters = {
+        to: to,
+        from: address,
+        value: value, // Value in wei
+        // gasPrice: '0x09184e72a000', // Customize as needed
+        // gas: '0x5208', // 21000 gas limit
+    };
+
+    const txHash = await ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [transactionParameters],
+    });
+    const hash = await sendTransaction(to, value);
+
+    const receipt = await ethereum.request({
+        method: 'eth_getTransactionReceipt',
+        params: [hash],
+    })
+
+    return receipt;
+
+}
+
+// Call this function to send a transaction 0.001 ether to the address 0x0F9171aFF2dbd8c02Dd9cFEaBDB61fDd8D2675c5
+
+sendTransaction("0x0F9171aFF2dbd8c02Dd9cFEaBDB61fDd8D2675c5", 0.001 * 10 ** 18);
+```
+          
+
+
 
 ## How To Build and Test UXUY SDK for local testing
 This section provides the instructions on how to build UXUY SDK from source code.
-
 
 
 ### Prerequisite
