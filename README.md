@@ -266,45 +266,6 @@ UXUY Wallet supports multiple chains:
 
 > ⚠️ Warning:EVM chains not supported in the table can be developed using custom chains.
 
-#### chainChanged
--  params:
--  
-``` ts 
-
- ethereum.on('chainChanged', (chainId) => {
-    console.log(chainId)
-})
-``` 
- 
-``` typescript
-// remove all event listeners
-ethereum.removeAllListeners();
-
-function handleAccountsChainChanged() {
-  ethereum.on('accountsChanged', ([address]) => {
-    // Handle the new accounts, or lack thereof.
-    // "accounts" will always be an array, but it can be empty.
-    alert('address changed');
-  });
-  ethereum.on('chainChanged', async (chainId) => {
-    // Handle the new chain.
-    // Correctly handling chain changes can be complicated.
-    // We recommend reloading the page unless you have good reason not to.
-    alert('chainid changed');
-  });
-}
-
-
-// add event listener
-function handleAccountsChanged(accounts) {
-  // ...
-}
-//remove
-ethereum.removeListener('accountsChanged', handleAccountsChanged); // only remove one 
-ethereum.on('accountsChanged', handleAccountsChanged);
-
-```
-
 ### More Tutorial
 [❓How to add custom chains to the code. #11](https://github.com/orgs/uxuyconnect/discussions/11)
 
