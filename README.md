@@ -507,6 +507,17 @@ ethereum.on('accountsChanged', handleAccountsChanged);
  - [quickstart](https://docs.uxuy.com/uxuy-connect/quickstart/)
  - [API guide](https://docs.uxuy.com/uxuy-connect/guide/)
 
+## Contributing
+
+We welcome contributions to the UXUY SDK! 
+
+Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE.md).
+
+
 
 
 
