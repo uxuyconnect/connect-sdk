@@ -9,14 +9,22 @@ Use `npm`:
 ```
 npm install @uxuycom/web3-tg-sdk
 ```
+
 [npm package source](https://www.npmjs.com/package/@uxuycom/web3-tg-sdk)
 
+### Import and Initialize the SDK
+In your JavaScript file, import and initialize the UXUY-Connect SDK:
 
+import { WalletTgSdk } from `@uxuycom/web3-tg-sdk`;
 
-### How To Build and Test UXUY SDK for local testing
+const { ethereum } = new WalletTgSdk();
+
+## How To Build and Test UXUY SDK for local testing
 This section provides the instructions on how to build UXUY SDK from source code.
 
-#### Prerequisite
+
+
+### Prerequisite
 Install PNPM: `Execute npm install -g pnpm`   
 Install TypeScript: `Run pnpm add typescript -D`
 - Install Yalc: Use `npm install -g yalc`
