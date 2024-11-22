@@ -42,7 +42,7 @@ For manual testing of the core-sdk, set up a separate web project. The guide bel
 
 Under the `typescript-sdk/packages/web3-tg-sdk` directory:
 
-- Navigate to the `core-sdk` directory.
+- Navigate to the `web3-tg-sdk` directory.
 - Execute `npm run build` to build your latest code.
 - Run `yalc publish`. You should see a message like `@uxuycom/web3-tg-sdk@<version> published in store.` (Note: The version number may vary).
 
