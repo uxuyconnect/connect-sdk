@@ -1,45 +1,210 @@
+# UXUY-Connect
+Welcome to the documents for UXUY Connect SDK. The SDK provides the APIs for developers to build applications with UXUY Wallet on Telegram. By using the SDK, developers can create the wallet like Dapp and perform actions to interact with the Wallet.
 
-### resource
- - [tg-dapp-demo](https://github.com/uxuycom/test-tg-dapp)
- - [quickstart](https://docs.uxuy.com/uxuy-connect/quickstart/)
- - [API guide](https://docs.uxuy.com/uxuy-connect/guide/)
+## How to use UXUY Connect SDK in Your Project
+### Install UXUY core SDK
 
+Use `npm`:
 
-
-### Install
-
-```
+```javascript index.ts
 npm install @uxuycom/web3-tg-sdk
-
 ```
 
+[npm package source](https://www.npmjs.com/package/@uxuycom/web3-tg-sdk)
 
-### Usage
+### Import and Initialize the SDK
+In your JavaScript file, import and initialize the UXUY-Connect SDK:
 
-```
-import { WalletTgSdk } from 'https://cdn.jsdelivr.net/npm/@uxuycom/web3-tg-sdk';
+ ```javascript index.ts
+ import { WalletTgSdk } from `@uxuycom/web3-tg-sdk`;
+    
+ const { ethereum } = new WalletTgSdk();
+ ```
 
-import { WalletTgSdk } from '@uxuycom/web3-tg-sdk'
+### Connect to Wallet
+Implement a function to connect to the UXUY Wallet:
 
-const { ethereum } = new WalletTgSdk({
-    metaData: {
-        name: 'your name',
-        icon:"https://example.com/icon.png"
-       
+```javascript index.ts
+async function connectWallet() {
+    try {
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        console.log('Connected account:', accounts[0]);
+        return accounts[0];
+    } catch (error) {
+        console.error('Failed to connect wallet:', error);
     }
-})
-
-
+}
 ```
 
-### MetaMask Standard Wallet Integration (Beta)
-Based on your request, I'll rephrase the content in the image using more professional open-source project terminology:
+### Get Chain ID and Get Account
+Retrieve the current chain ID:
 
-MetaMask Standard Wallet Integration (Beta)
+```javascript index.ts
+// Get the current chain ID
+async function getChainId() {
+    try {
+        const chainId = await ethereum.request({ method: 'eth_chainId' });
+        console.log('Current chain ID:', chainId);
+        return chainId;
+    } catch (error) {
+        console.error('Failed to get chain ID:', error);
+    }
+}
+
+// Get the current address
+async function getAccounts() {
+    try {
+        const accounts = await ethereum.request({ method: 'eth_accounts' });
+        console.log('Current address:', accounts[0]);
+        return accounts[0];
+    } catch (error) {
+        console.error('Failed to get address:', error);
+    }
+}
+```
+
+### Send a Transaction
+Implement a function to send a transaction:
+
+```javascript index.ts
+
+async function sendTransaction(to, value) {
+    try {
+        const accounts = await ethereum.request({ method: 'eth_accounts' });
+        const transactionParameters = {
+            to: to,
+            from: accounts[0],
+            value: value, // Value in wei
+            // gasPrice: '0x09184e72a000', // Customize as needed
+            // gas: '0x5208', // 21000 gas limit
+        };
+
+        const txHash = await ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [transactionParameters],
+        });
+        console.log('Transaction sent:', txHash);
+        return txHash;
+    } catch (error) {
+        console.error('Failed to send transaction:', error);
+    }
+}
+```
+
+### Listen for Events
+Set up event listeners for account and chain changes:
+
+```javascript index.ts
+ethereum.on('accountsChanged', (accounts) => {
+    console.log('Active account changed:', accounts[0]);
+});
+
+ethereum.on('chainChanged', (chainId) => {
+    console.log('Network changed to:', chainId);
+});
+```
+
+## Example usage
+Here's a simple example of how to use these functions:
+
+```javascript index.ts
+
+import { WalletTgSdk } from '@uxuycom/web3-tg-sdk';
+const { ethereum } = new WalletTgSdk();
+let address = null;
+let chainId = null;
+
+// Call this function when your DApp initializes
+async function initializeWallet() {
+    // Check if the wallet is already connected
+    let accounts = await ethereum.request({ method: 'eth_accounts' });
+    if (!accounts[0]) {
+        await ethereum.request({ method: 'eth_requestAccounts' });
+    }
+
+    // Get the current account and chain ID
+    chainId = await ethereum.request({ method: 'eth_chainId' });
+    accounts = await ethereum.request({ method: 'eth_accounts' });
+    address = accounts[0];
+  
+
+    // Set up event listeners for account and chain changes
+    ethereum.removeAllListeners();
+    ethereum.on('accountsChanged', (accounts) => {
+        address = accounts[0];
+        console.log('Active account changed:', accounts[0]);
+    });
+    ethereum.on('chainChanged', (changedChainId) => {
+        chainId = changedChainId
+        console.log('Network changed to:', changedChainId);
+    });
+
+}
+
+
+async function sendTransaction(to, value) {
+
+    const transactionParameters = {
+        to: to,
+        from: address,
+        value: value, // Value in wei
+        // gasPrice: '0x09184e72a000', // Customize as needed
+        // gas: '0x5208', // 21000 gas limit
+    };
+
+    const txHash = await ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [transactionParameters],
+    });
+    const hash = await sendTransaction(to, value);
+
+    const receipt = await ethereum.request({
+        method: 'eth_getTransactionReceipt',
+        params: [hash],
+    })
+
+    return receipt;
+
+}
+
+// Call this function to send a transaction 0.001 ether to the address 0x0F9171aFF2dbd8c02Dd9cFEaBDB61fDd8D2675c5
+
+sendTransaction("0x0F9171aFF2dbd8c02Dd9cFEaBDB61fDd8D2675c5", 0.001 * 10 ** 18);
+```
+          
+
+
+
+## How To Build and Test UXUY SDK for local testing
+This section provides the instructions on how to build UXUY SDK from source code.
+
+
+### Prerequisite
+Install PNPM: `Execute npm install -g pnpm`   
+Install TypeScript: `Run pnpm add typescript -D`
+- Install Yalc: Use `npm install -g yalc`
+
+### Steps for Using Yalc for Local Testing of Core-SDK
+
+For manual testing of the core-sdk, set up a separate web project. The guide below uses `yalc` to link the `core-sdk` locally, enabling its installation and import for testing.
+
+Under the `typescript-sdk/packages/web3-tg-sdk` directory:
+
+- Navigate to the `web3-tg-sdk` directory.
+- Execute `npm run build` to build your latest code.
+- Run `yalc publish`. You should see a message like `@uxuycom/web3-tg-sdk@<version> published in store.` (Note: The version number may vary).
+
+To set up your testing environment (e.g., a new Next.js project), use `yalc add @uxuycom/web3-tg-sdk@<version>` (ensure the version number is updated accordingly).
+
+- Run `pnpm install`. This installs `@uxuycom/web3-tg-sdk@<version>` with your local changes.
+
+
+
+### Integrated MetaMask Standard
 
 We are pleased to announce the integration of MetaMask's standard wallet. Connection can now be established with a single line of code.
 
-Current Status:
+#### Current Status:
 - Standard API mode support implemented
 - Full MetaMask feature set not yet supported
 - Incremental functionality enhancements planned
@@ -70,256 +235,55 @@ Note: This beta release focuses on core functionality. We appreciate community f
 
 The UXUY Wallet Connection is designed to be multi-chain. The following chains are supported:
 
-| Chain        | ChainID   |
-| :--------  | :-----  |
-| Ethereum | 1 (0x1)|
-| BNB Chain |56 (0x38)|
-| Base |8453 (0x2105)|
-| Arbitrum |42161 (0xa4b1)|
-| Polygon |137 (0x89)|
-| Fantom |250 (0xfa)|
-| Optimism |10 (0xa)|
-| Avalanche C-Chain |43114 (0xa86a)|
-| zkSync Era |324 (0x144)|
-| Linea |59144 (0xe708)|
-| Core |1116 (0x45c)|
-| zkLink |810180 (0xc5cc4)|
 
+## Supported Chains
+
+UXUY Wallet supports multiple chains:
+
+| Chain Name   | Chain ID (Decimal) | Chain ID (Hexadecimal) | Chain Specification | DApp Supported |
+| ------------ | ------------------ | ---------------------- | ------------------- | -------------- |
+| Ethereum     | 1                  | 0x1                    | EVM                 | ✅             |
+| BNB Chain    | 56                 | 0x38                   | EVM                 | ✅             |
+| Base         | 8453               | 0x2105                 | EVM                 | ✅             |
+| Arbitrum     | 42161              | 0xa4b1                 | EVM                 | ✅             |
+| Polygon      | 137                | 0x89                   | EVM                 | ✅             |
+| Fantom       | 250                | 0xfa                   | EVM                 | ✅             |
+| Optimism     | 10                 | 0xa                    | EVM                 | ✅             |
+| Avalanche    | 43114              | 0xa86a                 | EVM                 | ✅             |
+| zkSync Era   | 324                | 0x144                  | EVM                 | ✅             |
+| Linea        | 59144              | 0xe708                 | EVM                 | ❌             |
+| Core         | 1116               | 0x45c                  | EVM                 | ✅             |
+| zkLink Nova  | 810180             | 0xc5cc4                | EVM                 | ✅             |
+| opBNB Chain  | 204                | 0xcc                   | EVM                 | ✅             |
+| MAP Protocol | 22776              | 0x58f8                 | EVM                 | ✅             |
+| Bitlayer     | 200901             | 0x310c5                | EVM                 | ✅             |
+| PlatON       | 210425             | 0x335f9                | EVM                 | ✅             |
+| Ton          | -                  | -                      | TON                 | ✅             |
+| Tron         | -                  | -                      | TRON                | ✅             |
+| Lighting     | -                  | -                      | LIGHTING            | ❌             |
+| Flow         | 747                | -                      | EVM                 | ✅             |
+| ...          | ...                | ...                    | ...                 | ...            | 
+
+> ⚠️ Warning:EVM chains not supported in the table can be developed using custom chains.
+
+### More Tutorial
+[❓How to add custom chains to the code. #11](https://github.com/orgs/uxuyconnect/discussions/11)
+
+### Resource
+ - [tg-dapp-demo](https://github.com/uxuycom/test-tg-dapp)
+ - [quickstart](https://docs.uxuy.com/uxuy-connect/quickstart/)
+ - [API guide](https://docs.uxuy.com/uxuy-connect/guide/)
+
+## Contributing
+
+We welcome contributions to the UXUY SDK! 
+
+Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE.md).
 
-### request Api  
-
-The `request` method is used to make RPC requests to the connected wallet. It takes an object with the following properties:
-
-- `id` (optional): A number or string that identifies the request.
-- `method`: The RPC method to request.
-- `params` (optional): An array or object of parameters for the RPC method.
-
-The method returns a Promise that resolves with the result of the RPC method call.
-
-- [json-rpc-api from metamask](https://docs.metamask.io/wallet/reference/json-rpc-api/)
-- [json-rpc-api from ethereum.org ](https://ethereum.org/zh/developers/docs/apis/json-rpc/)
-
-
-``` ts
-
-interface RequestArguments {
-  id?:number | string
-  /** The RPC method to request. */
-  method: string;
-
-  /** The params of the RPC method, . */
-  params?: Array<unknown> | object;
-}
-
-ethereum.request = (args: RequestArguments): Promise<any>
-``` 
-
-
-### from UXuy Wallet rpc api
-
-#### eth_requestAccounts
-
-connect to the wallet and return the address of the connected wallet.
-
-- method: eth_requestAccounts
-- params: [] |
-- returns: Promise<string[address]>
-  
-``` ts
-
- ethereum.request({ method: 'eth_requestAccounts' })
-
-```
-
-
-
-#### eth_accounts
-
-return the address of the connected wallet.
-
--  method: eth_accounts
--  params:
--  returns: Promise<string[address]>
--  
-``` ts 
- ethereum.request({ method: 'eth_accounts' })
-
-```
-
-
-#### eth_chainId
-
-return the chainId of the connected wallet.
-
--  method: eth_chainId
--  params:
--  returns: Promise<number>
--  
-``` ts 
- ethereum.request({ method: 'eth_chainId' })
-
-```
-
-
-#### wallet_switchEthereumChain
-
-switch the connected wallet to the specified chainId.
-
--  method: wallet_switchEthereumChain
--  params:
-   -  chainId: number | string
--  returns: Promise<boolean>
--  
-``` ts
-try {
-  await ethereum.request({
-    method: 'wallet_switchEthereumChain',
-    params: [{ chainId: '0xf00' }],
-  });
-} catch (switchError) {
-  // This error code indicates that the chain has not been added to Uxuy Wallet.
-}
-```
-
-
-
-#### eth_sendTransaction
-
-send a transaction to the connected wallet.
-
--  method: eth_sendTransaction
--  params:
-   -  transaction: TransactionObject
--  returns: Promise<string>
--  
-``` ts
-
-const accounts = await ethereum.request({ method: 'eth_accounts', params: [{}] })  
-const fromAddress =  ethereum.selectedAddress
-const transactionParameters = {
-  nonce: '0x00', // ignored by Uxuy Wallet
-  gasPrice: '0x09184e72a000', // customizable by user during Uxuy Wallet confirmation.
-  gas: '0x2710', // customizable by user during Uxuy Wallet confirmation.
-  to: '0x0000000000000000000000000000000000000000', // Required except during contract publications.
-  from:  fromAddress || accounts[0], // must match user's active address.
-  value: '0x00', // Only required to send ether to the recipient from the initiating external account.
-  data:
-    '0x7f7465737432000000000000000000000000000000000000000000000000000000600057', // Optional, but used for defining smart contract creation and interaction.
-  chainId: '0x3', // Used to prevent transaction reuse across blockchains. Auto-filled by Uxuy Wallet.
-};
-
- ethereum.request(
-    { 
-        method: 'eth_sendTransaction', 
-        params: [ 
-            transactionParameters
-        ] 
-    }
-)
-```
-
-
-
-
-### signData Api
-
-- personal_sign
-- eth_signTypedData
-- eth_signTypedData_v3
-- eth_signTypedData_v4
-
-You can refer to docs
-[signing-data-with-metamask](https://docs.metamask.io/wallet/how-to/sign-data/#signing-data-with-metamask)
-[eth-sig-util](https://github.com/MetaMask/eth-sig-util)
-
-#### personal_sign
-
-sign a message with the connected wallet.
-
--  method: personal_sign
--  params:
-   -  message: string
-   -  address: string
--  returns: Promise<string>
--  
-``` ts
- ethereum.request({ method: 'personal_sign', params: ['hello', '0x1234567890'] })
-
-```
-
-
-#### eth_signTypedData_v3
-
-
--  params:
--  returns: Promise<string>
-```
- ethereum.request({ method: 'eth_signTypedData_v3', params: [{}, '0x1234567890'] })
-``` 
-
-#### eth_signTypedData_v4
-
--  params:
--  returns: Promise<string>
-```
- ethereum.request({ method: 'eth_signTypedData_v4', params: [{}] })
-``` 
-
-
-
-### Event listeners
-Notify when address and network change. Uses [eventemitter3](https://www.npmjs.com/package/eventemitter3).
-
-
-#### accountChanged
--  params:
--  
-```ts 
- ethereum.on('accountsChanged', handler: (accounts: Array<string>) => void);
-
- ethereum.on('accountChanged', (accounts) => {
-    console.log(accounts || [])
-})
-```
-
-#### chainChanged
--  params:
--  
-``` ts 
-
- ethereum.on('chainChanged', (chainId) => {
-    console.log(chainId)
-})
-``` 
- 
-``` ts 
-// remove all event listeners
-ethereum.removeAllListeners();
-
-function handleAccountsChainChanged() {
-  ethereum.on('accountsChanged', ([address]) => {
-    // Handle the new accounts, or lack thereof.
-    // "accounts" will always be an array, but it can be empty.
-    alert('address changed');
-  });
-  ethereum.on('chainChanged', async (chainId) => {
-    // Handle the new chain.
-    // Correctly handling chain changes can be complicated.
-    // We recommend reloading the page unless you have good reason not to.
-    alert('chainid changed');
-  });
-}
-
-
-// add event listener
-function handleAccountsChanged(accounts) {
-  // ...
-}
-//remove
-ethereum.removeListener('accountsChanged', handleAccountsChanged); // only remove one 
-ethereum.on('accountsChanged', handleAccountsChanged);
-
-```
 
 
 
