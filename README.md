@@ -200,7 +200,7 @@ To set up your testing environment (e.g., a new Next.js project), use `yalc add 
 
 
 
-### MetaMask Standard Wallet Integration (Beta)
+### Integrated MetaMask Standard
 
 We are pleased to announce the integration of MetaMask's standard wallet. Connection can now be established with a single line of code.
 
